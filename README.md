@@ -28,17 +28,17 @@
 ## 操作系统
 
 - **进程与线程**
-  - [进程间的通信方式](./blob/master/blog/进程间通信方式.md)
+  - [进程间的通信方式](./blog/进程间通信方式.md)
 
 
 
 ## 设计模式
 
-- [一文弄懂单例模式](./blob/master/blog/设计模式之单例模式(Singleton).md)
-- [一文弄懂工厂模式](./blob/master/blog/设计模式之工厂模式(Factory).md)
-- [一文弄懂观察者模式](./blob/master/blog/设计模式之观察者模式(Observer).md)
-- [一文弄懂建造者模式](./blob/master/blog/设计模式之建造者模式(Builder).md)
-- [一文弄懂适配器模式](./blob/master/blog/设计模式之适配器模式(Adapter).md)
+- [一文弄懂单例模式](./blog/设计模式之单例模式(Singleton).md)
+- [一文弄懂工厂模式](./blog/设计模式之工厂模式(Factory).md)
+- [一文弄懂观察者模式](./blog/设计模式之观察者模式(Observer).md)
+- [一文弄懂建造者模式](./blog/设计模式之建造者模式(Builder).md)
+- [一文弄懂适配器模式](./blog/设计模式之适配器模式(Adapter).md)
 
 
 
