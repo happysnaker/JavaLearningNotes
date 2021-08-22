@@ -8,6 +8,7 @@
   - [未完待续...](#未完待续)
 
 # 前言
+
 这里是[Happysnaker的学习笔记仓库](https://github.com/happysnaker/JavaLearningNotes)，我将在这里存放我学习的记录，将对Java、数据库、操作系统、计算机网络、计算机组成以及其他知识进行总结，将针对常见面试考点以及一些扩展知识点进行学习记录，并分享我拥有的一些学习资源，欢迎大家star一起交流学习。
 笔记仓库地址: [happysnaker/JavaLearningNotes](https://github.com/happysnaker/JavaLearningNotes)
 
@@ -29,6 +30,7 @@
 
 - **进程与线程**
   - [进程间的通信方式](./blog/进程间通信方式.md)
+  - [线程间的同步方式](./blob/master/blog/线程间同步方式.md)
 
 
 
