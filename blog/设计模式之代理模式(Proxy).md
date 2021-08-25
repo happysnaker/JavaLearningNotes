@@ -8,7 +8,7 @@
     - [动态代理](#动态代理)
   - [总结](#总结)
   - [与装饰者模式](#与装饰者模式)
-文章已收录我的仓库：[Java学习笔记与免费书籍分享](https://github.com/happysnaker/JavaLearningNotes)
+  文章已收录我的仓库：[Java学习笔记与免费书籍分享](https://github.com/happysnaker/JavaLearningNotes)
 
 # 代理模式
 
@@ -138,8 +138,6 @@ class DateServiceProxy implements DateService {
 
 这样一个代理就可以同时代理多个实现了同一个业务接口的业务，但这种方式必须要求客户端传入一个具体的实现类，**这样客户就必须要获得具体目标对象实例，目标对象就直接暴露在访问对象面前了**，对于某些情况这是不可接受的，例如你想获得某资源，但需要一定的权限，这时由代理控制你对目标资源对象的访问，不能由你直接区去访问，这是代理就必须将目标资源对象牢牢的控制在自己手中，**后面会讲到这其实就是保护代理。**但在这里，这种方法是可以接受的，并且带给程序较高的灵活性。
 
-### 
-
 ### 动态代理
 
 我们为什么需要动态代理？要理解这一点，我们必须要知道静态代理有什么不好，要实现静态代理，我们必须要提前将代理类硬编码在程序中，这是固定死的，上面也提到过，有一些代理一个代理就必须要负责一个类，这种情况下代理类的数量可能是非常多的，但我们真的每个代理都会用上吗？例如，在普通的项目中，可能99%的时间都仅仅只是简单的查询，而不会设计到增删功能，此时是不需要我们的增删代理类的，但在静态代理中，我们仍然必须硬编码代理类，这就造成了不必要的资源浪费并且增加了代码量。
@@ -230,6 +228,97 @@ $Proxy0代理类执行del方法，返回null，记录日志！
 我们代理类是通过`Proxy.newProxyInstance(this.getClass().getClassLoader(),service.getClass().getInterfaces(), this);`方法得到的，这个方法中，第二个参数我们传入了类service的接口部分，即DateService，在底层通过该接口的字节码帮我们创建一个新类$Proxy0，该类具有接口的全部方法。第三个参数是一个处理程序接口，此处传入this即表明将方法交给ProxyInvocationHandler 的接口即InvocationHandler的invoke方法执行。
 
 $Proxy并不具备真正处理的能力，当我们调用$$Proxy0.add()时，会陷入invoke处理程序，这是我们编写核心代码的地方，在这里`var result = method.invoke(service, args);`调用目标对象的方法，我们可以编写代理的核心代码。
+
+**我们还可以编写一个更加万能的接口，让其能扩展不同的业务接口，在静态代理中，如果要扩展两个接口我们最少要编写两个代理类，尽管这两个代理类的代码是一样的，通过一个向上转型，动态代理可以更好的实现这一功能，能够极大的较少代码量。**
+
+```java
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+//业务接口
+interface DateService {
+    void add();
+    void del();
+}
+
+class DateServiceImplA implements DateService {
+    @Override
+    public void add() {
+        System.out.println("成功添加！");
+    }
+
+    @Override
+    public void del() {
+        System.out.println("成功删除！");
+    }
+}
+
+
+interface OperateService {
+    void plus();
+    void subtract();
+}
+
+class OperateServiceImplA implements OperateService {
+    @Override
+    public void plus() {
+        System.out.println("+ 操作");
+    }
+
+    @Override
+    public void subtract() {
+        System.out.println("- 操作");
+    }
+}
+
+//w
+class ProxyInvocationHandler implements InvocationHandler {
+    private Object service;
+
+    public ProxyInvocationHandler(Object service) {
+        this.service = service;
+    }
+
+    public Object getDateServiceProxy() {
+        return Proxy.newProxyInstance(this.getClass().getClassLoader(), service.getClass().getInterfaces(), this);
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        var result = method.invoke(service, args); // 方法返回值
+        System.out.println(proxy.getClass().getName() + "代理类执行" + method.getName() + "方法，返回" + result +  "，记录日志！");
+        return result;
+    }
+}
+
+//客户端
+public class Test {
+    public static void main(String[] args) {
+        DateService dateServiceA = new DateServiceImplA();
+        DateService dateServiceProxy = (DateService) new ProxyInvocationHandler(dateServiceA).getDateServiceProxy();
+        dateServiceProxy.add();
+        dateServiceProxy.del();
+
+        OperateService operateServiceA = new OperateServiceImplA();
+        OperateService operateServiceProxy = (OperateService) new ProxyInvocationHandler(operateServiceA).getDateServiceProxy();
+        operateServiceProxy.plus();
+        operateServiceProxy.subtract();
+    }
+}
+/*
+成功添加！
+$Proxy0代理类执行add方法，返回null，记录日志！
+成功删除！
+$Proxy0代理类执行del方法，返回null，记录日志！
++ 操作
+$Proxy1代理类执行plus方法，返回null，记录日志！
+- 操作
+$Proxy1代理类执行subtract方法，返回null，记录日志！
+*/
+```
+
+
 
 
 
