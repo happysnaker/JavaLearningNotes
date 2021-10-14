@@ -55,7 +55,7 @@
   - [详解Java垃圾回收机制与垃圾收集器](./blog/Java垃圾回收机制与垃圾收集器.md)
   - [synchronized底层原理](blog/synchronized底层原理.md)
 - **并发**
-  - - [synchronized底层原理](blog/synchronized底层原理.md)
+  - [synchronized底层原理](blog/synchronized底层原理.md)
 
 # 资源分享
 
