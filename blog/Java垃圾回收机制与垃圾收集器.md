@@ -367,7 +367,7 @@ CARD_TABLE [this address >> 9] = 0;
 
 我们主要分析并发的可达性分析，在 *深入理解JVM* 中有一张很形象的图：
 
-![图片来源于网络](https://img-blog.csdnimg.cn/20201021160219159.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDU1Njk2OA==,size_16,color_FFFFFF,t_70#pic_center)
+![图片来源于网络](https://happysnaker-1306579962.cos.ap-nanjing.myqcloud.com/img/typora/20201021160219159.png)
 
 如果是本该删除的对象最终没有删除，这种情况是可以接受的，等到下一次GC时回收即可；但对于本该存活的对象意外删除，这种情况是不可接受的。
 
