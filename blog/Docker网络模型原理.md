@@ -40,7 +40,7 @@ docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group
 
 发现确实存在docker0接口，其ip为`172.17.0.1`，并且采用CIDR方式进行路由，子网掩码为`255.255.0.0`。
 
-创建一个容器bbox1并进入，键入`ifconfig`查看接口信息：
+创建一个容器bbox1**并进入**，键入`ifconfig`查看接口信息：
 
 ```bash
 eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02
@@ -85,7 +85,7 @@ Chain POSTROUTING (policy ACCEPT 21 packets, 1479 bytes)
 
 > 172.17.0.0/16 代表 所有 源地址 & 255.255.0.0(16个1) = 172.17.0.0 的地址，这里就是容器内网地址
 >
-> 同理，0.0.0.0意味着任意地址
+> 同理，0.0.0.0/0 意味着任意地址
 
 之前有个学弟问我，为什么其他服务器能回应由容器内发出的ping，当数据包发送到物理机上，又是怎么到达容器内的呢？
 
@@ -229,8 +229,4 @@ host模式即主机模式，这时候一个容器就是正常的主机的一个�
 ## none模式
 
 在这种模式下，容器有独立的网络栈，但不包含任何网络配置，只具有lo这个loopback网卡用于进程通信。也就是说，none模式为容器做了最少的网络设置，但是俗话说得好“少即是多”，在没有网络配置的情况下，通过第三方工具或者手工的方式，开发这任意定制容器的网络，提供了最高的灵活性。
-
-## 参考
-
-[Docker-Bridge Network 02 容器与外部通信 - 云中往事cloud - 博客园 (cnblogs.com)](https://www.cnblogs.com/sunqingliang/p/12731601.html)
 
