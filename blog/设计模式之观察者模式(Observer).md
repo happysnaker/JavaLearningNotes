@@ -1,11 +1,5 @@
-- [设计意图](#设计意图)
-- [设计](#设计)
-- [代码示例](#代码示例)
-- [讨论与优化](#讨论与优化)
-- [其他](#其他)
-    - [1. Observable类](#1-observable类)
-    - [2. Observer 接口](#2-observer-接口)
-- [总结](#总结)
+[toc]
+
 文章已收录我的仓库：[Java学习笔记与免费书籍分享](https://github.com/happysnaker/JavaLearningNotes)
 
 ## 设计意图
